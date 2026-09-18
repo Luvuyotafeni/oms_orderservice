@@ -1,0 +1,37 @@
+package com.fnb.orderservice.entitiy;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+
+@Entity
+@Table(name = "order_items")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class OrderItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderItemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private InventoryItem inventoryItem;
+
+    private int quantity;
+
+    private BigDecimal unitPriceAtPurchase;
+
+    private BigDecimal subtotal;
+}
